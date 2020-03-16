@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="vd.android.vdPicture">
+
+    <uses-sdk tools:overrideLibrary="com.luck.picture.lib,com.yalantis.ucrop"/>
+
+</manifest>
