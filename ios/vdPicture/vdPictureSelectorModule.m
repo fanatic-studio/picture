@@ -710,10 +710,16 @@ WX_EXPORT_METHOD(@selector(deleteCache))
 - (void)openViewController:(UIViewController *) vc
 {
     if ([[DeviceUtil getTopviewControler] isKindOfClass:[vdViewController class]]) {
-        vdViewController *vc = (vdViewController*)[DeviceUtil getTopviewControler];
-        [[vdNewPageManager sharedIntstance] onPageStatusListener:@{@"listenerName": @"otherPlugin", @"pageName": vc.pageName} status:@"pauseBefore"];
+        vdViewController *top_vc = (vdViewController*)[DeviceUtil getTopviewControler];
+        [[vdNewPageManager sharedIntstance] onPageStatusListener:@{@"listenerName": @"otherPlugin", @"pageName": top_vc.pageName} status:@"pauseBefore"];
+        if ([top_vc.animatedType isEqualToString:@"present"]) {
+            vc.modalPresentationStyle = UIModalPresentationPageSheet;
+        } else {
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
+
     }
-     [[DeviceUtil getTopviewControler] presentViewController:vc animated:YES completion:nil];
+    [[DeviceUtil getTopviewControler] presentViewController:vc animated:YES completion:nil];
 }
 
 @end
