@@ -1,4 +1,4 @@
-package vd.android.vdPicture.engine;
+package eco.android.ecoPicture.engine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,7 +23,7 @@ import com.luck.picture.lib.widget.longimage.ImageSource;
 import com.luck.picture.lib.widget.longimage.ImageViewState;
 import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView;
 
-import vd.android.vdPicture.R;
+import eco.android.ecoPicture.R;
 
 /**
  * @author：luck

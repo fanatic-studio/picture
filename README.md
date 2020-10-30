@@ -3,19 +3,19 @@
 ## 安装
 
 ```shell script
-vd plugin install https://github.com/ivde/picture
+eco plugin install https://github.com/iecoe/picture
 ```
 
 ## 卸载
 
 ```shell script
-vd plugin uninstall https://github.com/ivde/picture
+eco plugin uninstall https://github.com/iecoe/picture
 ```
 
 ## 引用
 
 ```js
-const picture = app.requireModule("vd/picture");
+const picture = app.requireModule("eco/picture");
 ```
 
 ## 启动相册拍照
@@ -243,4 +243,4 @@ picture.deleteCache()
 
 ## 预览效果
 
-![](https://vd.app/assets/img/ezgif-4-8e03e2be73.c4bda1b7.gif)
+![](https://eco.app/assets/img/ezgif-4-8e03e2be73.c4bda1b7.gif)

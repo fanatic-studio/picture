@@ -1,5 +1,5 @@
 //
-//  vdPicture.h
+//  ecoPicture.h
 //  Pods
 //
 //  Created by 高一 on 2019/3/4.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface vdPicture : NSObject
+@interface ecoPicture : NSObject
 
 + (instancetype) sharedManager;
 

@@ -1,14 +1,14 @@
-#import "vdPictureSelectorModule.h"
+#import "ecoPictureSelectorModule.h"
 #import "TZImagePickerController.h"
 #import "DeviceUtil.h"
-#import "vdNewPageManager.h"
+#import "ecoNewPageManager.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ZLShowMultimedia.h"
 #import "KSPhotoBrowser.h"
 #import <WeexPluginLoader/WeexPluginLoader.h>
 
-@interface vdPictureSelectorModule ()<TZImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
+@interface ecoPictureSelectorModule ()<TZImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (strong, nonatomic) CLLocation *location;
@@ -20,9 +20,9 @@
 
 @end
 
-@implementation vdPictureSelectorModule
+@implementation ecoPictureSelectorModule
 
-WX_PlUGIN_EXPORT_MODULE(vdPicture, vdPictureSelectorModule)
+WX_PlUGIN_EXPORT_MODULE(ecoPicture, ecoPictureSelectorModule)
 WX_EXPORT_METHOD(@selector(create:callback:))
 WX_EXPORT_METHOD(@selector(compressImage:callback:))
 WX_EXPORT_METHOD(@selector(picturePreview:paths:callback:))
@@ -709,9 +709,9 @@ WX_EXPORT_METHOD(@selector(deleteCache))
 
 - (void)openViewController:(UIViewController *) vc
 {
-    if ([[DeviceUtil getTopviewControler] isKindOfClass:[vdViewController class]]) {
-        vdViewController *top_vc = (vdViewController*)[DeviceUtil getTopviewControler];
-        [[vdNewPageManager sharedIntstance] onPageStatusListener:@{@"listenerName": @"otherPlugin", @"pageName": top_vc.pageName} status:@"pauseBefore"];
+    if ([[DeviceUtil getTopviewControler] isKindOfClass:[ecoViewController class]]) {
+        ecoViewController *top_vc = (ecoViewController*)[DeviceUtil getTopviewControler];
+        [[ecoNewPageManager sharedIntstance] onPageStatusListener:@{@"listenerName": @"otherPlugin", @"pageName": top_vc.pageName} status:@"pauseBefore"];
         if ([top_vc.animatedType isEqualToString:@"present"]) {
             vc.modalPresentationStyle = UIModalPresentationPageSheet;
         } else {

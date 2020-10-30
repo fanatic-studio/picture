@@ -1,29 +1,29 @@
 //
-//  vdPicture.m
+//  ecoPicture.m
 //  Pods
 //
 //  Created by 高一 on 2019/3/4.
 //
 
-#import "vdPicture.h"
-#import "vdPictureBridge.h"
+#import "ecoPicture.h"
+#import "ecoPictureBridge.h"
 #import "WeexInitManager.h"
 
-WEEX_PLUGIN_INIT(vdPicture)
-@implementation vdPicture
+WEEX_PLUGIN_INIT(ecoPicture)
+@implementation ecoPicture
 
 + (instancetype) sharedManager {
     static dispatch_once_t onceToken;
-    static vdPicture *instance;
+    static ecoPicture *instance;
     dispatch_once(&onceToken, ^{
-        instance = [[vdPicture alloc] init];
+        instance = [[ecoPicture alloc] init];
     });
     return instance;
 }
 
 - (void) setJSCallModule:(JSCallCommon *)callCommon webView:(WKWebView*)webView
 {
-    [callCommon setJSCallAssign:webView name:@"vdPicture" bridge:[[vdPictureBridge alloc] init]];
+    [callCommon setJSCallAssign:webView name:@"ecoPicture" bridge:[[ecoPictureBridge alloc] init]];
 }
 
 @end

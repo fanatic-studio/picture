@@ -1,25 +1,25 @@
 //
-//  vdPictureBridge.m
-//  vdApp
+//  ecoPictureBridge.m
+//  ecoApp
 //
 //  Created by 高一 on 2019/1/6.
 //
 
-#import "vdPictureBridge.h"
-#import "vdPictureSelectorModule.h"
+#import "ecoPictureBridge.h"
+#import "ecoPictureSelectorModule.h"
 
-@interface vdPictureBridge ()
+@interface ecoPictureBridge ()
 
-@property (nonatomic, strong) vdPictureSelectorModule *picture;
+@property (nonatomic, strong) ecoPictureSelectorModule *picture;
 
 @end
 
-@implementation vdPictureBridge
+@implementation ecoPictureBridge
 
 - (void)initialize
 {
     if (self.picture == nil) {
-        self.picture = [[vdPictureSelectorModule alloc] init];
+        self.picture = [[ecoPictureSelectorModule alloc] init];
     }
 }
 

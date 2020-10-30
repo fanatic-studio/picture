@@ -38,5 +38,5 @@ dependencies {
     compileOnly "com.alibaba:fastjson:${project.fastjsonLibVersion}"
     compileOnly "org.apache.weex:sdk_legacy:${project.weex_sdkLibVersion}"
     //
-    compileOnly project(":vd")
+    compileOnly project(":eco")
 }

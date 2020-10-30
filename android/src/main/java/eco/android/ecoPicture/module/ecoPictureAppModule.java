@@ -1,19 +1,19 @@
-package vd.android.vdPicture.module;
+package eco.android.ecoPicture.module;
 
 
 import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
 
-import app.vd.framework.extend.base.WXModuleBase;
-import vd.android.vdPicture.entry.vdPictureEntry;
+import app.eco.framework.extend.base.WXModuleBase;
+import eco.android.ecoPicture.entry.ecoPictureEntry;
 
-public class vdPictureAppModule extends WXModuleBase {
+public class ecoPictureAppModule extends WXModuleBase {
 
-    private vdPictureEntry __obj;
+    private ecoPictureEntry __obj;
 
-    private vdPictureEntry myApp() {
+    private ecoPictureEntry myApp() {
         if (__obj == null) {
-            __obj = new vdPictureEntry();
+            __obj = new ecoPictureEntry();
         }
         return __obj;
     }

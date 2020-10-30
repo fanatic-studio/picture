@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "WeexSDK.h"
 
-@interface vdPictureSelectorModule : NSObject <WXModuleProtocol>
+@interface ecoPictureSelectorModule : NSObject <WXModuleProtocol>
 
 - (void)create:(NSDictionary*)params callback:(WXModuleKeepAliveCallback)callback;
 - (void)compressImage:(NSDictionary*)params callback:(WXModuleKeepAliveCallback)callback;

@@ -1,20 +1,20 @@
-package vd.android.vdPicture.module;
+package eco.android.ecoPicture.module;
 
-import app.vd.framework.extend.view.ExtendWebView;
-import app.vd.framework.extend.view.webviewBridge.JsCallback;
-import app.vd.framework.ui.vd;
-import vd.android.vdPicture.entry.vdPictureEntry;
+import app.eco.framework.extend.view.ExtendWebView;
+import app.eco.framework.extend.view.webviewBridge.JsCallback;
+import app.eco.framework.ui.eco;
+import eco.android.ecoPicture.entry.ecoPictureEntry;
 
 /**
  * web-view模块组件
  */
-public class vdPictureWebModule {
+public class ecoPictureWebModule {
 
-    private static vdPictureEntry __obj;
+    private static ecoPictureEntry __obj;
 
-    private static vdPictureEntry myApp() {
+    private static ecoPictureEntry myApp() {
         if (__obj == null) {
-            __obj = new vdPictureEntry();
+            __obj = new ecoPictureEntry();
         }
         return __obj;
     }
@@ -29,7 +29,7 @@ public class vdPictureWebModule {
      * @param callback
      */
     public static void create(ExtendWebView webView, String object, JsCallback callback) {
-        myApp().create(webView.getContext(), object, vd.MCallback(callback));
+        myApp().create(webView.getContext(), object, eco.MCallback(callback));
     }
 
     /**
@@ -38,7 +38,7 @@ public class vdPictureWebModule {
      * @param callback
      */
     public static void compressImage(ExtendWebView webView, String object, JsCallback callback) {
-        myApp().compressImage(webView.getContext(), object, vd.MCallback(callback));
+        myApp().compressImage(webView.getContext(), object, eco.MCallback(callback));
     }
 
     /**
@@ -47,7 +47,7 @@ public class vdPictureWebModule {
      * @param array
      */
     public static void picturePreview(ExtendWebView webView, int position, String array, JsCallback callback) {
-        myApp().picturePreview(webView.getContext(), position, array, vd.MCallback(callback));
+        myApp().picturePreview(webView.getContext(), position, array, eco.MCallback(callback));
     }
 
     /**

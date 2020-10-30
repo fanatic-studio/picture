@@ -1,4 +1,4 @@
-package vd.android.vdPicture.entry;
+package eco.android.ecoPicture.entry;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -34,20 +34,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import app.vd.framework.activity.PageActivity;
-import app.vd.framework.extend.annotation.ModuleEntry;
-import app.vd.framework.extend.bean.WebCallBean;
-import app.vd.framework.extend.module.vdCommon;
-import app.vd.framework.extend.module.vdJson;
-import app.vd.framework.extend.module.vdMap;
-import app.vd.framework.extend.module.vdParse;
-import vd.android.vdPicture.R;
-import vd.android.vdPicture.engine.GlideEngine;
-import vd.android.vdPicture.module.vdPictureWebModule;
-import vd.android.vdPicture.module.vdPictureAppModule;
+import app.eco.framework.activity.PageActivity;
+import app.eco.framework.extend.annotation.ModuleEntry;
+import app.eco.framework.extend.bean.WebCallBean;
+import app.eco.framework.extend.module.ecoCommon;
+import app.eco.framework.extend.module.ecoJson;
+import app.eco.framework.extend.module.ecoMap;
+import app.eco.framework.extend.module.ecoParse;
+import eco.android.ecoPicture.R;
+import eco.android.ecoPicture.engine.GlideEngine;
+import eco.android.ecoPicture.module.ecoPictureWebModule;
+import eco.android.ecoPicture.module.ecoPictureAppModule;
 
 @ModuleEntry
-public class vdPictureEntry {
+public class ecoPictureEntry {
 
     /**
      * APP启动会运行此函数方法
@@ -57,13 +57,13 @@ public class vdPictureEntry {
 
         //1、注册weex模块
         try {
-            WXSDKEngine.registerModule("vdPicture", vdPictureAppModule.class);
+            WXSDKEngine.registerModule("ecoPicture", ecoPictureAppModule.class);
         } catch (WXException e) {
             e.printStackTrace();
         }
 
-        //2、注册web模块（web-view模块可通过requireModuleJs调用，调用详见：https://vd.app/component/web-view.html）
-        WebCallBean.addClassData("vdPicture", vdPictureWebModule.class);
+        //2、注册web模块（web-view模块可通过requireModuleJs调用，调用详见：https://eco.app/component/web-view.html）
+        WebCallBean.addClassData("ecoPicture", ecoPictureWebModule.class);
     }
 
     /****************************************************************************************/
@@ -110,7 +110,7 @@ public class vdPictureEntry {
         List<LocalMedia> selected = new ArrayList<>();
         if (selectedList != null) {
             for (int i = 0; i <  selectedList.size(); i++) {
-                String path = vdJson.getString(vdJson.parseObject(selectedList.get(i)), "path");
+                String path = ecoJson.getString(ecoJson.parseObject(selectedList.get(i)), "path");
                 for (int j = 0; j <  mLocalMediaLists.size(); j++) {
                     LocalMedia tempMedia = mLocalMediaLists.get(j);
                     if (tempMedia != null) {
@@ -130,8 +130,8 @@ public class vdPictureEntry {
             LocalMedia media = result.get(i);
             JSONObject tmpObj = new JSONObject();
             tmpObj.put("path", getPath(media));
-            tmpObj.put("cutPath", vdParse.parseStr(media.getCutPath()));
-            tmpObj.put("compressPath", vdParse.parseStr(media.getCompressPath()));
+            tmpObj.put("cutPath", ecoParse.parseStr(media.getCutPath()));
+            tmpObj.put("compressPath", ecoParse.parseStr(media.getCompressPath()));
             tmpObj.put("isCut", media.isCut());
             tmpObj.put("isCompressed", media.isCompressed());
             tmpObj.put("compressed", media.isCompressed());     //废弃
@@ -151,7 +151,7 @@ public class vdPictureEntry {
         if (TextUtils.isEmpty(path)) {
             path = media.getRealPath();
         }
-        return vdParse.parseStr(path);
+        return ecoParse.parseStr(path);
     }
 
     private void getWeChatStyle(Context context) {
@@ -241,7 +241,7 @@ public class vdPictureEntry {
      * @param callback
      */
     public void create(Context context, String object, final JSCallback callback) {
-        JSONObject json = vdJson.parseObject(object);
+        JSONObject json = ecoJson.parseObject(object);
         String pageName = ((PageActivity) context).getPageInfo().getPageName();
         //
         Map<String, Object> callData = new HashMap<>();
@@ -251,56 +251,56 @@ public class vdPictureEntry {
         //
         getWeChatStyle(context);
         //
-        List<LocalMedia> selected = toLocalMedia(vdJson.parseArray(json.getString("selected")));
+        List<LocalMedia> selected = toLocalMedia(ecoJson.parseArray(json.getString("selected")));
         PictureSelectionModel model;
-        if (vdJson.getString(json, "type", "gallery").equals("camera")) {
+        if (ecoJson.getString(json, "type", "gallery").equals("camera")) {
             model = PictureSelector
                     .create((Activity) context)
-                    .openCamera(vdJson.getInt(json, "gallery", PictureMimeType.ofAll())); // 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openCamera(ecoJson.getInt(json, "gallery", PictureMimeType.ofAll())); // 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
         } else {
             model = PictureSelector
                     .create((Activity) context)
-                    .openGallery(vdJson.getInt(json, "gallery", PictureMimeType.ofAll())); // 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                    .openGallery(ecoJson.getInt(json, "gallery", PictureMimeType.ofAll())); // 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
         }
         GlideEngine mGlideEngine = GlideEngine.createGlideEngine();
-        mGlideEngine.sizeMultiplier(vdJson.getFloat(json, "multiplier", 0.5f));      // glide 加载图片大小 0~1之间 如设置
-        mGlideEngine.glideOverride(vdJson.getInt(json, "overrideWidth", 180), vdJson.getInt(json, "overrideHeight", 180));      // int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+        mGlideEngine.sizeMultiplier(ecoJson.getFloat(json, "multiplier", 0.5f));      // glide 加载图片大小 0~1之间 如设置
+        mGlideEngine.glideOverride(ecoJson.getInt(json, "overrideWidth", 180), ecoJson.getInt(json, "overrideHeight", 180));      // int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
         model.loadImageEngine(mGlideEngine)
                 .isWeChatStyle(true)                                        // 是否开启微信图片选择风格
                 .setPictureStyle(mPictureParameterStyle)                    // 动态自定义相册主题
                 .setPictureCropStyle(mCropParameterStyle)                   // 动态自定义裁剪主题
-                .maxSelectNum(vdJson.getInt(json, "maxNum", 9))                      // 最大选择数量 int
-                .minSelectNum(vdJson.getInt(json, "minNum", 0))                      // 最小选择数量 int
-                .imageSpanCount(vdJson.getInt(json, "spanCount", 4))                 // 每行显示个数 int
-                .selectionMode(vdJson.getInt(json, "mode", PictureConfig.MULTIPLE))  // 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-                .previewImage(vdJson.getBoolean(json, "previewImage", true))         // 是否可预览图片 true or false
-                .previewVideo(vdJson.getBoolean(json, "previewVideo", true))         // 是否可预览视频 true or false
-                .enablePreviewAudio(vdJson.getBoolean(json, "previewAudio", true))   // 是否可播放音频 true or false
-                .isCamera(vdJson.getBoolean(json, "camera", true))                   // 是否显示拍照按钮 true or false
-                .imageFormat(vdJson.getString(json, "format", PictureMimeType.JPEG)) // 拍照保存图片格式后缀,默认jpeg
-                .isZoomAnim(vdJson.getBoolean(json, "zoomAnim", true))               // 图片列表点击 缩放效果 默认true
-                .enableCrop(vdJson.getBoolean(json, "crop", false))                  // 是否裁剪 true or false
-                .compress(vdJson.getBoolean(json, "compress", false))                // 是否压缩 true or false
-                .withAspectRatio(vdJson.getInt(json, "ratioX", 1), vdJson.getInt(json, "ratioY", 1))                      // int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
-                .hideBottomControls(vdJson.getBoolean(json, "cropControls", false))  // 是否显示uCrop工具栏，默认不显示 true or false
-                .isGif(vdJson.getBoolean(json, "gif", false))                        // 是否显示gif图片 true or false
-                .freeStyleCropEnabled(vdJson.getBoolean(json, "freeCrop", false))    // 裁剪框是否可拖拽 true or false
-                .circleDimmedLayer(vdJson.getBoolean(json, "circle", false))         // 是否圆形裁剪 true or false
-                .showCropFrame(vdJson.getBoolean(json, "cropFrame", true))           // 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
-                .showCropGrid(vdJson.getBoolean(json, "cropGrid", true))             // 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
-                .openClickSound(vdJson.getBoolean(json, "clickSound", false))        // 是否开启点击声音 true or false
+                .maxSelectNum(ecoJson.getInt(json, "maxNum", 9))                      // 最大选择数量 int
+                .minSelectNum(ecoJson.getInt(json, "minNum", 0))                      // 最小选择数量 int
+                .imageSpanCount(ecoJson.getInt(json, "spanCount", 4))                 // 每行显示个数 int
+                .selectionMode(ecoJson.getInt(json, "mode", PictureConfig.MULTIPLE))  // 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .previewImage(ecoJson.getBoolean(json, "previewImage", true))         // 是否可预览图片 true or false
+                .previewVideo(ecoJson.getBoolean(json, "previewVideo", true))         // 是否可预览视频 true or false
+                .enablePreviewAudio(ecoJson.getBoolean(json, "previewAudio", true))   // 是否可播放音频 true or false
+                .isCamera(ecoJson.getBoolean(json, "camera", true))                   // 是否显示拍照按钮 true or false
+                .imageFormat(ecoJson.getString(json, "format", PictureMimeType.JPEG)) // 拍照保存图片格式后缀,默认jpeg
+                .isZoomAnim(ecoJson.getBoolean(json, "zoomAnim", true))               // 图片列表点击 缩放效果 默认true
+                .enableCrop(ecoJson.getBoolean(json, "crop", false))                  // 是否裁剪 true or false
+                .compress(ecoJson.getBoolean(json, "compress", false))                // 是否压缩 true or false
+                .withAspectRatio(ecoJson.getInt(json, "ratioX", 1), ecoJson.getInt(json, "ratioY", 1))                      // int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .hideBottomControls(ecoJson.getBoolean(json, "cropControls", false))  // 是否显示uCrop工具栏，默认不显示 true or false
+                .isGif(ecoJson.getBoolean(json, "gif", false))                        // 是否显示gif图片 true or false
+                .freeStyleCropEnabled(ecoJson.getBoolean(json, "freeCrop", false))    // 裁剪框是否可拖拽 true or false
+                .circleDimmedLayer(ecoJson.getBoolean(json, "circle", false))         // 是否圆形裁剪 true or false
+                .showCropFrame(ecoJson.getBoolean(json, "cropFrame", true))           // 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
+                .showCropGrid(ecoJson.getBoolean(json, "cropGrid", true))             // 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                .openClickSound(ecoJson.getBoolean(json, "clickSound", false))        // 是否开启点击声音 true or false
                 .selectionMedia(selected)                                              // 是否传入已选图片 List<LocalMedia> list
-                .previewEggs(vdJson.getBoolean(json, "eggs", false))                 // 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中) true or false
-                .cutOutQuality(vdJson.getInt(json, "quality", 90))                   // 裁剪压缩质量 默认90 int
-                .minimumCompressSize(vdJson.getInt(json, "compressSize", 100))       // 小于100kb的图片不压缩
-                .synOrAsy(vdJson.getBoolean(json, "sync", true))                     // 同步true或异步false 压缩 默认同步
-                .cropImageWideHigh(vdJson.getInt(json, "cropWidth", 0), vdJson.getInt(json, "cropHeight", 0))   // 裁剪宽高比，设置如果大于图片本身宽高则无效 int
-                .rotateEnabled(vdJson.getBoolean(json, "rotate", true))              // 裁剪是否可旋转图片 true or false
-                .scaleEnabled(vdJson.getBoolean(json, "scale", true))                // 裁剪是否可放大缩小图片 true or false
-                .videoQuality(vdJson.getInt(json, "videoQuality", 0))                // 视频录制质量 0 or 1 int
-                .videoMaxSecond(vdJson.getInt(json, "videoMaxSecond", 15))           // 显示多少秒以内的视频or音频也可适用 int
-                .videoMinSecond(vdJson.getInt(json, "videoMinSecond", 10))           // 显示多少秒以内的视频or音频也可适用 int
-                .recordVideoSecond(vdJson.getInt(json, "recordVideoSecond", 60))     // 视频秒数录制 默认60s int
+                .previewEggs(ecoJson.getBoolean(json, "eggs", false))                 // 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中) true or false
+                .cutOutQuality(ecoJson.getInt(json, "quality", 90))                   // 裁剪压缩质量 默认90 int
+                .minimumCompressSize(ecoJson.getInt(json, "compressSize", 100))       // 小于100kb的图片不压缩
+                .synOrAsy(ecoJson.getBoolean(json, "sync", true))                     // 同步true或异步false 压缩 默认同步
+                .cropImageWideHigh(ecoJson.getInt(json, "cropWidth", 0), ecoJson.getInt(json, "cropHeight", 0))   // 裁剪宽高比，设置如果大于图片本身宽高则无效 int
+                .rotateEnabled(ecoJson.getBoolean(json, "rotate", true))              // 裁剪是否可旋转图片 true or false
+                .scaleEnabled(ecoJson.getBoolean(json, "scale", true))                // 裁剪是否可放大缩小图片 true or false
+                .videoQuality(ecoJson.getInt(json, "videoQuality", 0))                // 视频录制质量 0 or 1 int
+                .videoMaxSecond(ecoJson.getInt(json, "videoMaxSecond", 15))           // 显示多少秒以内的视频or音频也可适用 int
+                .videoMinSecond(ecoJson.getInt(json, "videoMinSecond", 10))           // 显示多少秒以内的视频or音频也可适用 int
+                .recordVideoSecond(ecoJson.getInt(json, "recordVideoSecond", 60))     // 视频秒数录制 默认60s int
                 .forResult(result -> {
                     mLocalMediaLists = result;
                     Map<String, Object> callData1 = new HashMap<>();
@@ -321,20 +321,20 @@ public class vdPictureEntry {
      * @param callback
      */
     public void compressImage(Context context, String object, final JSCallback callback) {
-        JSONObject json = vdJson.parseObject(object);
-        JSONArray lists = vdJson.parseArray(json.getString("lists"));
-        if (lists.size() == 0 && vdJson.parseArray(object).size() > 0) {
-            lists = vdJson.parseArray(object);
+        JSONObject json = ecoJson.parseObject(object);
+        JSONArray lists = ecoJson.parseArray(json.getString("lists"));
+        if (lists.size() == 0 && ecoJson.parseArray(object).size() > 0) {
+            lists = ecoJson.parseArray(object);
         }
         //
         List<LocalMedia> selected = new ArrayList<>();
         for (Object src : lists) {
             LocalMedia tmpMedia = new LocalMedia();
             if (src instanceof String) {
-                tmpMedia.setPath(vdParse.parseStr(src));
+                tmpMedia.setPath(ecoParse.parseStr(src));
                 selected.add(tmpMedia);
             } else {
-                JSONObject tmpObj = vdJson.parseObject(src);
+                JSONObject tmpObj = ecoJson.parseObject(src);
                 if (!TextUtils.isEmpty(tmpObj.getString("path"))) {
                     tmpMedia.setPath(tmpObj.getString("path"));
                     selected.add(tmpMedia);
@@ -351,7 +351,7 @@ public class vdPictureEntry {
         JSONArray finalLists = lists;
         Luban.with(context)
                 .loadMediaData(selected)
-                .setCompressQuality(vdJson.getInt(json, "compressSize", 90))
+                .setCompressQuality(ecoJson.getInt(json, "compressSize", 90))
                 .setCompressListener(new OnCompressListener() {
                     @Override
                     public void onStart() {
@@ -385,7 +385,7 @@ public class vdPictureEntry {
      * @param array
      */
     public void picturePreview(Context context, int position, String array, JSCallback callback) {
-        JSONArray lists = vdJson.parseArray(array);
+        JSONArray lists = ecoJson.parseArray(array);
         if (lists.size() == 0) {
             JSONObject tempJson = new JSONObject();
             tempJson.put("path", array);
@@ -396,10 +396,10 @@ public class vdPictureEntry {
         for (Object src : lists) {
             LocalMedia tmpMedia = new LocalMedia();
             if (src instanceof String) {
-                tmpMedia.setPath(vdParse.parseStr(src));
+                tmpMedia.setPath(ecoParse.parseStr(src));
                 selected.add(tmpMedia);
             } else {
-                JSONObject tmpObj = vdJson.parseObject(src);
+                JSONObject tmpObj = ecoJson.parseObject(src);
                 if (!TextUtils.isEmpty(tmpObj.getString("path"))) {
                     tmpMedia.setPath(tmpObj.getString("path"));
                     selected.add(tmpMedia);
@@ -417,14 +417,14 @@ public class vdPictureEntry {
             broadcastCallback = callback;
             BroadcastManager.getInstance(context).registerReceiver(broadcastReceiver, BroadcastAction.ACTION_DELETE_PREVIEW_POSITION);
             if (context instanceof PageActivity) {
-                ((PageActivity) context).setPageStatusListener("__vdPicture::" + vdCommon.randomString(6), new JSCallback() {
+                ((PageActivity) context).setPageStatusListener("__ecoPicture::" + ecoCommon.randomString(6), new JSCallback() {
                     @Override
                     public void invoke(Object data) {
-                        Map<String, Object> retData = vdMap.objectToMap(data);
+                        Map<String, Object> retData = ecoMap.objectToMap(data);
                         if (retData == null) {
                             return;
                         }
-                        String status = vdParse.parseStr(retData.get("status"));
+                        String status = ecoParse.parseStr(retData.get("status"));
                         if ("destroy".equals(status)) {
                             BroadcastManager.getInstance(context).unregisterReceiver(broadcastReceiver, BroadcastAction.ACTION_DELETE_PREVIEW_POSITION);
                         }
