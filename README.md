@@ -3,13 +3,13 @@
 ## 安装
 
 ```shell script
-eco plugin install https://github.com/iecoe/picture
+eco plugin install https://github.com/kjeco/picture
 ```
 
 ## 卸载
 
 ```shell script
-eco plugin uninstall https://github.com/iecoe/picture
+eco plugin uninstall https://github.com/kjeco/picture
 ```
 
 ## 引用
